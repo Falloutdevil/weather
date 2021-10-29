@@ -3,13 +3,15 @@ import {Input} from "./components/input/Input";
 import {Card} from "./components/card/Card";
 
 function App() {
+    const cityList =['New York', 'London', 'Moscow']
   return (
     <div className="Main">
       <Input/>
       <div className="CardList">
-        <Card/>
-        <Card/>
-        <Card/></div>
+          {
+              cityList.map(city => <Card key={city} city={city}/> )
+          }
+      </div>
     </div>
   );
 }

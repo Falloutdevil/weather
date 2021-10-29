@@ -21,3 +21,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.idea/weather.iml
+/.idea/vcs.xml
+/.idea/modules.xml
+/.idea/discord.xml
+/.idea/aws.xml
+/.idea/.gitignore
