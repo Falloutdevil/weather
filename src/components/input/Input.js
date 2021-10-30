@@ -4,6 +4,7 @@ import './../../App.css';
 
 export const Input = ({setCitiesList}) => {
     const [inputValue, setInputValue] = useState('');
+    const [someValue, setSomeValue] = useState('')
     const inputRef = useRef(null);
 
     const handleOnClick = () => {
@@ -14,9 +15,14 @@ export const Input = ({setCitiesList}) => {
     const handleOnChange = (event) => {
         setInputValue(event.target.value);
     }
+    const onSomeClick = () => {
+      setSomeValue((someValue) => someValue + 1);
+    }
+
+
     return (
         <div className="InputWrap">
-            <input className="Input" onChange={handleOnChange} value={inputValue} ref={inputRef}/>
+            <input className="Input" onClick={onSomeClick} onChange={handleOnChange} value={inputValue} ref={inputRef}/>
             <button className="Button" onClick={handleOnClick}>+</button>
         </div>
     )

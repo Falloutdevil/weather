@@ -1,18 +1,16 @@
-import React, {useState} from "react";
+import React from "react";
 import './App.css';
 import {Input} from "./components/input/Input";
-import {Card} from "./components/card/Card";
+import {CardList} from "./components/cardList/CardList";
+import {useCitiesList} from "./hooks/useCitiesList";
 
 function App() {
-    const [citiesList, setCitiesList] = useState([]);
+    const [citiesList, setCitiesList] = useCitiesList()
+
   return (
     <div className="Main">
       <Input setCitiesList={setCitiesList}/>
-      <div className="CardList">
-          {
-              citiesList.map(city => <Card key={city} city={city}/> )
-          }
-      </div>
+      <CardList citiesList={citiesList}/>
     </div>
   );
 }
