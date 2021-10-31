@@ -1,29 +1,55 @@
-import React, {useState, useRef} from "react";
+import React, { useRef, useContext} from "react";
+import {GlobalContext} from "../../App";
 import './../../App.css';
 
 
-export const Input = ({setCitiesList}) => {
-    const [inputValue, setInputValue] = useState('');
-    const [someValue, setSomeValue] = useState('')
+export const Input = () => {
     const inputRef = useRef(null);
+    const { dispatch, state: { inputValue, editingCity } } = useContext(GlobalContext);
 
-    const handleOnClick = () => {
-        setCitiesList((currentArray) => [...currentArray, inputValue]);
-        setInputValue('');
-        inputRef.current.focus();
+    const handleOnAdd = () => {
+        if (inputValue.length) {
+            dispatch({
+                type: 'ADD_CITY',
+                payload: inputValue,
+            })
+            dispatch({
+                type: 'RESET_INPUT_VALUE',
+            })
+            inputRef.current.focus();
+        }
     }
+
+    const handleOnDone = () => {
+        if (inputValue.length) {
+            dispatch({
+                type: 'EDIT_CITY_DONE',
+                payload: inputValue,
+            })
+            dispatch({
+                type: 'RESET_INPUT_VALUE',
+            })
+            inputRef.current.focus();
+        }
+    }
+
     const handleOnChange = (event) => {
-        setInputValue(event.target.value);
+        dispatch({
+            type: 'CHANGE_INPUT_VALUE',
+            payload: event.target.value,
+        })
     }
-    const onSomeClick = () => {
-      setSomeValue((someValue) => someValue + 1);
-    }
-
 
     return (
         <div className="InputWrap">
-            <input className="Input" onClick={onSomeClick} onChange={handleOnChange} value={inputValue} ref={inputRef}/>
-            <button className="Button" onClick={handleOnClick}>+</button>
+            <input className="Input" onChange={handleOnChange} value={inputValue} ref={inputRef} />
+            {
+                editingCity
+                    ?
+                    <button className="Button" onClick={handleOnDone}>done</button>
+                    :
+                    <button className="Button" onClick={handleOnAdd}>+</button>
+            }
         </div>
     )
 }
