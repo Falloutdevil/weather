@@ -3,6 +3,7 @@ import './App.css';
 import {Input} from "./components/input/Input";
 import {CardList} from "./components/cardList/CardList";
 import {useCitiesList} from "./hooks/useCitiesList";
+import {ErrorBoundary} from "./ErrorBoundary/withErrorBoundary";
 
 export const GlobalContext = React.createContext();
 
@@ -12,7 +13,9 @@ function App() {
         <GlobalContext.Provider value={{ state, dispatch }}>
             <div className="Main">
                 <Input />
-                <CardList />
+                <ErrorBoundary>
+                    <CardList />
+                </ErrorBoundary>
             </div>
         </GlobalContext.Provider>
     );

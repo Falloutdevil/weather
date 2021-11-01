@@ -4,13 +4,13 @@ import {useWeather} from "../../hooks/useWeather";
 import './../../App.css';
 
 
-export const Card = memo(({ city }) => {
+const CardNoMemo = ({city}) => {
     const data = useWeather(city);
-    const { dispatch } = useContext(GlobalContext);
+    const {dispatch} = useContext(GlobalContext);
     if (!data) return null;
-    const { name, weather, main } = data;
-    const { description, icon } = weather[0];
-    const { temp, humidity, feels_like } = main;
+    const {name, weather, main} = data;
+    const {description, icon} = weather[0];
+    const {temp, humidity, feels_like} = main;
 
     const handleOnDelete = () => {
         dispatch({
@@ -33,7 +33,7 @@ export const Card = memo(({ city }) => {
                 <button className="ActionButton" onClick={handleOnDelete}>X</button>
             </div>
             <div className="MainInfo">
-                <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon" />
+                <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon"/>
                 <div className="Title">{name}</div>
                 <div className="Description">{description}</div>
                 <div className="Temperature">{temp.toFixed()}</div>
@@ -44,5 +44,6 @@ export const Card = memo(({ city }) => {
             </div>
         </div>
     );
-})
+}
 
+export const Card = memo(CardNoMemo);
