@@ -20,8 +20,8 @@ class CardListNoState extends React.Component {
     }
 
     render() {
-        const {orderBy} = this.state;
-        const {citiesList} = this.props.state;
+        const { orderBy } = this.state;
+        const { citiesList } = this.props.state;
         let sortedCitiesList = citiesList.sort();
         if (orderBy === 'desc') {
             sortedCitiesList.reverse();
@@ -34,7 +34,7 @@ class CardListNoState extends React.Component {
                 </select>
                 <div className="CardList">
                     {
-                        sortedCitiesList.map(city => <Card key={city} city={city}/>)
+                        sortedCitiesList.map(city => <Card key={city} city={city} />)
                     }
                 </div>
             </>
