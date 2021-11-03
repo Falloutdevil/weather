@@ -5,11 +5,11 @@ import './../../App.css';
 import {Link, useHistory, useRouteMatch} from "react-router-dom";
 
 
-const CardNoMemo = ({ city, setCityCoord }) => {
+const CardNoMemo = ({city, setCityCoord}) => {
     const data = useWeather(city);
     const history = useHistory();
     const isHome = Boolean(useRouteMatch('/home'));
-    const { dispatch } = useContext(GlobalContext);
+    const {dispatch} = useContext(GlobalContext);
     useEffect(() => {
         if (data && data.coord.lat && data.coord.lon && setCityCoord) {
             setCityCoord({
@@ -18,34 +18,62 @@ const CardNoMemo = ({ city, setCityCoord }) => {
             });
         }
     }, [data, setCityCoord])
-    if (!data) return null;
-    const { name, weather, main } = data;
-    const { description, icon } = weather[0];
-    const { temp, humidity, feels_like } = main;
 
-    const handleOnDelete = () => {
+    const handleOnDelete = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         dispatch({
             type: 'DELETE_CITY',
             payload: city,
         })
     };
 
-    const handleOnEdit = () => {
+    const handleOnEdit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         dispatch({
             type: 'EDIT_CITY',
             payload: city,
         })
         history.push('/home');
     };
-    if (isHome) {
+
+    const handleOnLinkClick = () => {
+        dispatch({
+            type: 'EDIT_CITY_DONE',
+            payload: city,
+        })
+        history.push('/home');
+    };
+
+    if (data === null) {
         return (
-            <Link to={`/city/${city.toLowerCase()}`} className="Card">
+            <div className="Card">
                 <div className="ActionButtonWrap">
                     <button className="ActionButton" onClick={handleOnEdit}>edit</button>
                     <button className="ActionButton" onClick={handleOnDelete}>X</button>
                 </div>
                 <div className="MainInfo">
-                    <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon" />
+                    <div className="Title">{city}</div>
+                    <div className="Description">Not found</div>
+                </div>
+            </div>
+        )
+    }
+    if (!data) return null;
+    const {name, weather, main} = data;
+    const {description, icon} = weather[0];
+    const {temp, humidity, feels_like} = main;
+
+    if (isHome) {
+        return (
+            <Link to={`/city/${city.toLowerCase()}`} onClick={handleOnLinkClick} className="Card">
+                <div className="ActionButtonWrap">
+                    <button className="ActionButton" onClick={handleOnEdit}>edit</button>
+                    <button className="ActionButton" onClick={handleOnDelete}>X</button>
+                </div>
+                <div className="MainInfo">
+                    <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon"/>
                     <div className="Title">{name}</div>
                     <div className="Description">{description}</div>
                     <div className="Temperature TemperatureIcon">{temp.toFixed()}</div>
@@ -64,7 +92,7 @@ const CardNoMemo = ({ city, setCityCoord }) => {
                 <button className="ActionButton" onClick={handleOnDelete}>X</button>
             </div>
             <div className="MainInfo">
-                <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon" />
+                <img className="Icon" src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt="icon"/>
                 <div className="Title">{name}</div>
                 <div className="Description">{description}</div>
                 <div className="Temperature TemperatureIcon">{temp.toFixed()}</div>

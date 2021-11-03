@@ -2,8 +2,8 @@ import React, {useState, } from "react";
 import {Card} from "../card/Card";
 import {useForecast} from "../../hooks/useForecast";
 import './../../App.css';
-import {DailyCard} from "../dailyCard/DailyCard";
 import {Link, useParams} from "react-router-dom";
+import {DailyCards} from "../dailyCard/DailyCards";
 
 
 export const SingleCity = () => {
@@ -15,12 +15,7 @@ export const SingleCity = () => {
         <div className="SingleCityWrap">
             <Link to="/home" className="GoBack">Go back</Link>
             <Card city={city} setCityCoord={setCityCoord} />
-            {data &&
-            <div className="DailyCards">
-                {data.daily.map(dailyCard => <DailyCard dailyCard={dailyCard} key={dailyCard.dt} />)}
-            </div>
-            }
-
+            {data && <DailyCards daily={data.daily} />}
         </div>
     )
 };

@@ -4,7 +4,7 @@ import {Card} from "../card/Card";
 import {withGlobalState} from "../../hocs/withGlobalState";
 
 
-class CardListNoState extends React.Component {
+export class CardListNoState extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
